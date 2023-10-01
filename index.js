@@ -27,8 +27,13 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    // Get the database and collection on which to run the operation
+    const menuCollection = client.db("bonsaiDB").collection("menu");
 
-
+    app.get('/menu', async (req, res) => {
+      const result = await menuCollection.find().toArray();
+      res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
@@ -43,10 +48,10 @@ run().catch(console.dir);
 
 
 
-app.get('/', (req, res) =>{
-    res.send('Bonsai Sushi is running')
+app.get('/', (req, res) => {
+  res.send('Bonsai Sushi is running')
 })
 
 app.listen(port, () => {
-    console.log(`Bonsai Sushi is sitting on port ${port}`);
+  console.log(`Bonsai Sushi is sitting on port ${port}`);
 })
